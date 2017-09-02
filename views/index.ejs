@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .container {
+        width: 800px;
+        max-height: 400px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <canvas id="canvas"></canvas>
+    </div>
+
+    <script>
+      window.Module = {
+        arguments: ['./'],
+        print: console.log.bind(console),
+        printErr: console.error.bind(console),
+        canvas: document.querySelector('#canvas'),
+        locateFile: function(file) {
+          if (/lovr\.wasm$/.test(file)) {
+            return 'http://lovr.org/static/js/' + file;
+          }
+
+          return file;
+        }
+      };
+    </script>
+
+    <script src="<%= project %>.js"></script>
+    <script src="http://lovr.org/static/js/webvr-polyfill.min.js"></script>
+    <script src="http://lovr.org/static/js/lovr.js" async></script>
+  </body>
+</html>
