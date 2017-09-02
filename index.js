@@ -1,7 +1,12 @@
 const path = require('path');
 const { exec } = require('child_process');
-
-const argv = require('yargs-parser')(process.argv.slice(2));
+const { watch } = require('chokidar');
+const express = require('express');
+const opn = require('opn');
+const argv = require('yargs-parser')(process.argv.slice(2), {
+  boolean: ['open'],
+  default: { open: true }
+});
 
 if (argv._.length < 1) {
   console.error('usage: lovr-webvr-server [--port <port>] project');
@@ -11,11 +16,9 @@ if (argv._.length < 1) {
 const source = argv._[0];
 const project = path.basename(source);
 const port = argv.port || 8080;
+const open = argv.open;
 
-const { watch } = require('chokidar');
 let updated = false;
-
-watch(source).on('all', () => updated = false);
 
 const compile = (req, res, next) => {
   if (updated) return next();
@@ -31,14 +34,16 @@ const compile = (req, res, next) => {
   ].join(' ');
 
   exec(command, () => compile(req, res, next));
-}
+};
 
-const express = require('express');
+watch(source).on('all', () => updated = false);
 
 express().
   set('view engine', 'ejs').
   use(express.static('build')).
   get('/', compile, (req, res) => res.render('index', { project })).
   listen(port, function() {
-    console.log(`Listening on ${this.address().port}`);
+    const address = this.address();
+    console.log(`Listening on ${address.port}`);
+    open && opn(`http://localhost:${address.port}`);
   });
