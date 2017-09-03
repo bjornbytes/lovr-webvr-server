@@ -30,6 +30,10 @@
       };
     </script>
 
+    <script>
+      var ws = new WebSocket('ws://localhost:8081');
+      ws.onmessage = function() { window.location.reload(); };
+    </script>
     <script src="<%= project %>.js"></script>
     <script src="http://lovr.org/static/js/webvr-polyfill.min.js"></script>
     <script src="http://lovr.org/static/js/lovr.js" async></script>

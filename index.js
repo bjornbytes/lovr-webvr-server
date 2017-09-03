@@ -1,6 +1,7 @@
 const path = require('path');
 const { exec } = require('child_process');
 const { watch } = require('chokidar');
+const WebSocket = require('ws');
 const express = require('express');
 const opn = require('opn');
 const argv = require('yargs-parser')(process.argv.slice(2), {
@@ -36,7 +37,27 @@ const compile = (req, res, next) => {
   exec(command, () => compile(req, res, next));
 };
 
-watch(source).on('all', () => updated = false);
+const refresh = () => {
+  connections.forEach(connection => {
+    if (connection.readyState === WebSocket.OPEN) {
+      connection.send('refresh');
+    }
+  });
+};
+
+watch(source).on('all', () => {
+  if (updated) {
+    updated = false;
+    compile(null, null, refresh);
+  }
+});
+
+const socketServer = new WebSocket.Server({ port: 8081 });
+let connections = [];
+socketServer.on('connection', connection => {
+  connections.push(connection);
+  connection.on('close', () => connections.splice(connections.indexOf(connection)));
+});
 
 express().
   set('view engine', 'ejs').
