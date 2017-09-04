@@ -34,7 +34,15 @@ const compile = (req, res, next) => {
     '--js-output=' + path.join(__dirname, 'build', `${project}.js`)
   ].join(' ');
 
-  exec(command, () => compile(req, res, next));
+  exec(command, (error, stdout, stderr) => {
+    if (error) {
+      console.error(stderr);
+      updated = false;
+      return next();
+    }
+
+    compile(req, res, next)
+  });
 };
 
 const refresh = () => {
