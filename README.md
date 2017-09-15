@@ -1,12 +1,17 @@
 lovr-webvr-server
 ===
 
-A live reloading server for rapid prototyping of LÖVR WebVR projects.
+A live-reloading server for rapid prototyping of LÖVR WebVR projects.
 
 Install
 ---
 
-Clone the repo, then grab the submodules with `git submodule update --init`.
+Clone the repo, and then grab the submodules:
+
+```sh
+git clone git@github.com:bjornbytes/lovr-webvr-server.git
+git submodule update --init
+```
 
 Usage
 ---
