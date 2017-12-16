@@ -15,7 +15,7 @@ if (argv._.length < 1) {
 }
 
 const source = argv._[0];
-const project = path.basename(source);
+const project = path.basename(path.resolve(source));
 const port = argv.port || 8080;
 const open = argv.open;
 
@@ -70,7 +70,7 @@ socketServer.on('connection', connection => {
 express().
   set('view engine', 'ejs').
   set('views', path.join(__dirname, './views')).
-  use(express.static('build')).
+  use(express.static(path.join(__dirname, 'build'))).
   get('/', compile, (req, res) => res.render('index', { project })).
   listen(port, function() {
     const address = this.address();
