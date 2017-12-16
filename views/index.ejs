@@ -22,7 +22,7 @@
         canvas: document.querySelector('#canvas'),
         locateFile: function(file) {
           if (/lovr\.wasm$/.test(file)) {
-            return 'http://lovr.org/static/js/' + file;
+            return 'https://lovr.org/static/js/' + file;
           }
 
           return file;
@@ -35,7 +35,7 @@
       ws.onmessage = function() { window.location.reload(); };
     </script>
     <script src="<%= project %>.js"></script>
-    <script src="http://lovr.org/static/js/webvr-polyfill.min.js"></script>
-    <script src="http://lovr.org/static/js/lovr.js" async></script>
+    <script src="https://lovr.org/static/js/webvr-polyfill.min.js"></script>
+    <script src="https://lovr.org/static/js/lovr.js" async></script>
   </body>
 </html>
