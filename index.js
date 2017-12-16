@@ -69,6 +69,7 @@ socketServer.on('connection', connection => {
 
 express().
   set('view engine', 'ejs').
+  set('views', path.join(__dirname, './views')).
   use(express.static('build')).
   get('/', compile, (req, res) => res.render('index', { project })).
   listen(port, function() {
