@@ -26,12 +26,17 @@ const compile = (req, res, next) => {
 
   updated = true;
 
+  const filePackager = path.join(__dirname, 'emscripten/tools/file_packager.py');
+  const dataOutput = path.join(__dirname, 'build', `${project}.data`);
+  const preload = path.resolve(source);
+  const jsOutput = path.join(__dirname, 'build', `${project}.js`);
+
   const command = [
     'python',
-    path.join(__dirname, 'emscripten/tools/file_packager.py'),
-    path.join(__dirname, 'build', `${project}.data`),
-    '--preload ' + path.resolve(source) + '@/',
-    '--js-output=' + path.join(__dirname, 'build', `${project}.js`)
+    `"${filePackager}"`,
+    `"${dataOutput}"`,
+    `--preload "${preload}"@/`,
+    `--js-output="${jsOutput}"`
   ].join(' ');
 
   exec(command, (error, stdout, stderr) => {
