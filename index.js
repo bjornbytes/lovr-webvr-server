@@ -59,8 +59,11 @@ const refresh = () => {
   });
 };
 
-watch(source).on('all', () => {
-  if (updated) {
+let ready = false;
+watch(source).on('all', event => {
+  if (!ready && event === 'ready') {
+    ready = true;
+  } else if (ready && updated) {
     updated = false;
     compile(null, null, refresh);
   }
