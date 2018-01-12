@@ -60,14 +60,14 @@ const refresh = () => {
 };
 
 let ready = false;
-watch(source).on('all', event => {
-  if (!ready && event === 'ready') {
-    ready = true;
-  } else if (ready && updated) {
-    updated = false;
-    compile(null, null, refresh);
-  }
-});
+watch(source).
+  on('ready', () => ready = true).
+  on('all', event => {
+    if (ready && updated) {
+      updated = false;
+      compile(null, null, refresh);
+    }
+  });
 
 const socketServer = new WebSocket.Server({ port: 8081 });
 let connections = [];
