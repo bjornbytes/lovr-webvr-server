@@ -24,7 +24,7 @@ Run the server by passing a path to a LÖVR project:
 node . path/to/project
 ```
 
-A browser will be opened with the project, and will automatically reload whenver a Lua file is
+A browser will be opened with the project, and will automatically reload whenever a Lua file is
 changed.
 
 Options
