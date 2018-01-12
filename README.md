@@ -13,7 +13,7 @@ git clone git@github.com:bjornbytes/lovr-webvr-server.git
 git submodule update --init
 ```
 
-Also make sure you have Python installed and available in your PATH.
+Also make sure you have Python 2 installed and available in your PATH.
 
 Usage
 ---
