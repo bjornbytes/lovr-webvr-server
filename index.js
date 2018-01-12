@@ -35,6 +35,7 @@ const compile = (req, res, next) => {
     'python',
     `"${filePackager}"`,
     `"${dataOutput}"`,
+    '--no-heap-copy',
     `--preload "${preload}"@/`,
     `--js-output="${jsOutput}"`
   ].join(' ');
@@ -46,7 +47,7 @@ const compile = (req, res, next) => {
       return next();
     }
 
-    compile(req, res, next)
+    compile(req, res, next);
   });
 };
 
