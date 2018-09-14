@@ -65,7 +65,7 @@
         preinitializedWebGLContext: context,
         locateFile: function(file) {
           if (/lovr\.wasm$/.test(file)) {
-            return 'https://lovr.org/static/js/' + file;
+            return '<%= base %>/' + file;
           } else {
             return file;
           }
@@ -103,6 +103,6 @@
     </script>
 
     <script src="<%= project %>.js"></script>
-    <script src="https://lovr.org/static/js/lovr.js" async></script>
+    <script src="<%= base %>/lovr.js" async></script>
   </body>
 </html>

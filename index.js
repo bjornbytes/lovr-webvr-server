@@ -6,18 +6,20 @@ const express = require('express');
 const opn = require('opn');
 const argv = require('yargs-parser')(process.argv.slice(2), {
   boolean: ['open'],
-  default: { open: true }
+  string: ['lovr'],
+  default: { open: true, lovr: 'https://lovr.org/static/js' }
 });
 
 if (argv._.length < 1) {
-  console.error('usage: lovr-webvr-server [--port <port>] project');
-  process.exit(1);
+  console.error('usage: lovr-webvr-server [--port <port>] [--[no-]open] [--lovr <path>] project');
+  return process.exit(1);
 }
 
 const source = argv._[0];
 const project = path.basename(path.resolve(source));
 const port = argv.port || 8080;
 const open = argv.open;
+const lovr = argv.lovr;
 
 let updated = false;
 
@@ -77,11 +79,16 @@ socketServer.on('connection', connection => {
   connection.on('close', () => connections.splice(connections.indexOf(connection)));
 });
 
+const isRemote = lovr.startsWith('http');
+const base = isRemote ? lovr.replace(/\/+$/, '') : '';
+const baseServe = isRemote ? function(req, res, next) { next(); } : express.static(path.resolve(lovr));
+
 express().
   set('view engine', 'ejs').
   set('views', path.join(__dirname, './views')).
+  get('/', compile, (req, res) => res.render('index', { project, base })).
   use(express.static(path.join(__dirname, 'build'))).
-  get('/', compile, (req, res) => res.render('index', { project })).
+  use(baseServe).
   listen(port, function() {
     const address = this.address();
     console.log(`Listening on ${address.port}`);
