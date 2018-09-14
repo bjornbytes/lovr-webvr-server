@@ -1,7 +1,7 @@
 lovr-webvr-server
 ===
 
-A live-reloading server for rapid prototyping of LÖVR WebVR projects.
+A live-reloading server for rapid prototyping of [LÖVR](https://lovr.org) WebVR projects.
 
 Install
 ---
