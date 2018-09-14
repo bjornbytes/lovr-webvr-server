@@ -30,8 +30,11 @@ changed.
 Options
 ---
 
-- `--port` The port to use for the web server.  The default is 8080.
+- `--port <port>` The port to use for the web server.  The default is 8080.
 - `--open`, `--no-open` Whether or not a browser window should be opened on startup.
+- `--lovr <path>` A path to a folder that contains `lovr.js` and `lovr.wasm`, or a URL to use as the
+  base path.  The default is `https://lovr.org/static/js`.  This lets you use different versions or
+  builds of LÖVR.
 
 License
 ---
