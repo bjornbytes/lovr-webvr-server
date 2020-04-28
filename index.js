@@ -75,7 +75,7 @@ const socketServer = new WebSocket.Server({ port: 8081 });
 let connections = [];
 socketServer.on('connection', connection => {
   connections.push(connection);
-	connection.on('error', () => {});
+  connection.on('error', () => {});
   connection.on('close', () => connections.splice(connections.indexOf(connection)));
 });
 
