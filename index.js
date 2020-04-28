@@ -71,7 +71,7 @@ watch(source).
     }
   });
 
-const socketServer = new WebSocket.Server({ port: 8081 });
+const socketServer = new WebSocket.Server({ port: port + 1 });
 let connections = [];
 socketServer.on('connection', connection => {
   connections.push(connection);
