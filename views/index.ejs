@@ -98,7 +98,9 @@
     </script>
 
     <script>
-      var ws = new WebSocket('ws://localhost:8081');
+      var host = location.hostname
+      var port = parseInt(location.port, 10) + 1
+      var ws = new WebSocket('ws://' + host + ':' + port);
       ws.onmessage = function() { window.location.reload(); };
     </script>
 
